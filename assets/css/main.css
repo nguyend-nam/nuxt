@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ant-drawer-content-wrapper {
+  width: 100% !important;
+
+  @media (min-width: 768px) {
+    width: 480px !important;
+  }
+}
+
+.ant-drawer-body {
+  padding: 0 !important;
+}
+
+.ant-drawer-header {
+  padding: 16px 20px !important;
+}
