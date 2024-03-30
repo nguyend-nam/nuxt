@@ -14,11 +14,16 @@ const closeDrawer = () => {
 
 const props = defineProps(['gif'])
 
-const imgSrc = props.gif?.images?.fixed_width?.url || props.gif?.images?.fixed_height?.url || props.gif?.images?.original?.url || props.gif?.images?.fixed_width_downsampled?.url
+const imgSrc = 
+  props.gif?.images?.original?.url ||
+  props.gif?.images?.fixed_height?.url || 
+  props.gif?.images?.fixed_width?.url || 
+  props.gif?.images?.fixed_height_downsampled?.url || 
+  props.gif?.images?.fixed_width_downsampled?.url
 </script>
 
 <template>
-  <div v-if="!!gif?.images" role="button" @click="showDrawer" class="w-[calc((100%-8px)/2)] md:w-[calc((100%-16px)/3)] lg:w-[calc((100%-24px)/4)] h-[200px] bg-gray-300 rounded-lg" >
+  <div v-if="!!gif?.images" role="button" @click="showDrawer" class="w-[calc((100%-8px)/2)] md:w-[calc((100%-16px)/3)] h-[200px] bg-gray-300 rounded-lg" >
       <img :src="imgSrc" :alt="gif.name" class="w-full h-full object-cover rounded-lg" />
   </div>
   <Drawer :open="isOpen" @close="closeDrawer" rootClassName="w-screen">
@@ -39,8 +44,8 @@ const imgSrc = props.gif?.images?.fixed_width?.url || props.gif?.images?.fixed_h
 
     <div class="p-5">  
       <img :src="imgSrc" :alt="gif?.slug" class="w-full h-auto object-cover rounded-lg" />
-      <p class="mt-2.5 mb-4 text-sm">{{ gif?.title }}</p>
-      <a :href="imgSrc" target="_blank">
+      <p v-if="gif?.title" class="mt-2.5 text-sm">{{ gif?.title }}</p>
+      <a :href="imgSrc" target="_blank" class="block mt-4">
         <button class="px-4 py-2.5 text-white font-semibold w-full rounded-md bg-gradient-to-r from-violet-700 to-blue-600">View Gif</button>
       </a>
     </div>

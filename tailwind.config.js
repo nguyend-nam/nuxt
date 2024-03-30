@@ -20,6 +20,11 @@ export default {
           '-webkit-background-clip': 'text',
           '-webkit-text-fill-color': 'transparent',
         },
+        '.section-container': {
+          maxWidth: '1040px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }
       }
 
       addUtilities(newUtilities, ['responsive', 'hover'])

@@ -58,9 +58,10 @@ watch(isLoadingMoreVisible, () => {
 </script>
 
 <template>
-    <div class="p-4 pt-10">
+    <section class="p-4 pt-10">
+      <div class="section-container">
         <div v-if="searchValue" class="mb-2">
-            <h2 class="text-lg md:text-xl">Showing results for keyword <b class="gradient-text bg-gradient-to-r from-violet-700 to-blue-600">{{ searchValue }}</b></h2>
+          <h2 class="text-lg md:text-xl">Showing results for keyword <b class="gradient-text bg-gradient-to-r from-violet-700 to-blue-600">{{ searchValue }}</b></h2>
         </div>
         <div v-if="isLoading" class="w-full flex justify-center p-4">
           <Spin size="large" />
@@ -69,11 +70,12 @@ watch(isLoadingMoreVisible, () => {
         <div class="flex flex-wrap gap-2">
           <GifItem v-for="gif in gifsList" :key="gif.id" :gif="gif" />
         </div>
-
+        
         <div v-if="showLoadMore" ref="loadingMore" class="w-full flex justify-center p-4">
           <Spin size="large" />
         </div>
-    </div>
+      </div>
+    </section>
 </template>
 
 
