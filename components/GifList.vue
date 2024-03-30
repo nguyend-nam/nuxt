@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, watchEffect } from 'vue'
 import { useElementVisibility } from '@vueuse/core'
-import { AutoComplete, Spin } from 'ant-design-vue';
+import { AutoComplete, Spin, notification } from 'ant-design-vue';
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -37,7 +37,6 @@ const getMoreGifs = async () => {
     if (showLoadMore.value === false || !props.searchValue) return
     checkpoint.value += 25
     try {
-        isLoading.value = true
         const res = await $fetch(`https://api.giphy.com/v1/gifs/search?api_key=${runtimeConfig.public.giphyKey}&q=${props.searchValue}&limit=25&offset=${checkpoint.value}&rating=g&lang=en&bundle=messaging_non_clips`);
         const data = await res.data
         gifsList.value.push(...data)
@@ -47,8 +46,6 @@ const getMoreGifs = async () => {
     } catch (error) {
         notification.error({message: 'Error', description: 'Could not fetch gifs'});
         console.log(error);
-    } finally {
-        isLoading.value = false
     }
 }
 
@@ -68,13 +65,13 @@ watch(isLoadingMoreVisible, () => {
         <div v-if="isLoading" class="w-full flex justify-center p-4">
           <Spin size="large" />
         </div>
-        <div>
-            <div class="flex flex-wrap gap-2">
-                <GifItem v-for="gif in gifsList" :key="gif.id" :gif="gif" />
-            </div>
-            <div v-if="showLoadMore" ref="loadingMore" class="w-full flex justify-center p-4">
-          <Spin size="large" />
+        
+        <div class="flex flex-wrap gap-2">
+          <GifItem v-for="gif in gifsList" :key="gif.id" :gif="gif" />
         </div>
+
+        <div v-if="showLoadMore" ref="loadingMore" class="w-full flex justify-center p-4">
+          <Spin size="large" />
         </div>
     </div>
 </template>

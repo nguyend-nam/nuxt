@@ -13,11 +13,13 @@ const closeDrawer = () => {
 };
 
 const props = defineProps(['gif'])
+
+const imgSrc = props.gif?.images?.fixed_width?.url || props.gif?.images?.fixed_height?.url || props.gif?.images?.original?.url || props.gif?.images?.fixed_width_downsampled?.url
 </script>
 
 <template>
   <div v-if="!!gif?.images" role="button" @click="showDrawer" class="w-[calc((100%-8px)/2)] md:w-[calc((100%-16px)/3)] lg:w-[calc((100%-24px)/4)] h-[200px] bg-gray-300 rounded-lg" >
-      <img :src="gif.images?.fixed_width?.url || gif.images?.fixed_height?.url || gif.images?.original?.url" :alt="gif.name" class="w-full h-full object-cover rounded-lg" />
+      <img :src="imgSrc" :alt="gif.name" class="w-full h-full object-cover rounded-lg" />
   </div>
   <Drawer :open="isOpen" @close="closeDrawer" rootClassName="w-screen">
     <div v-if="!!gif?.user" class="relative h-[120px] md:h-[140px]">
@@ -27,7 +29,7 @@ const props = defineProps(['gif'])
       <div class="bg-gradient-to-t from-black/90 to-transparent absolute bottom-0 w-full h-[80px] md:h-[100px]"></div>
 
       <div class="flex gap-2 absolute bottom-5 left-5 pr-5">
-        <Avatar :size="40" :src="gif.user?.avatar_url" class="border border-white" />
+        <Avatar :size="40" :src="gif.user?.avatar_url" class="border border-white shrink-0" />
         <div class="flex flex-col gap-0.5">
           <span class="text-white text-lg font-semibold leading-[125%] line-clamp-1">{{ gif.user?.display_name || '-' }}</span>
           <span class="text-gray-200 text-xs leading-[125%] line-clamp-1">{{ gif.user?.username || '-' }}</span>
@@ -36,8 +38,11 @@ const props = defineProps(['gif'])
     </div>
 
     <div class="p-5">  
-      <img :src="gif?.images?.fixed_width?.url || gif?.images?.original?.url" :alt="gif?.slug" class="w-full h-auto object-cover rounded-lg" />
-      <p class="mt-4 text-sm">{{ gif?.title }}</p>
+      <img :src="imgSrc" :alt="gif?.slug" class="w-full h-auto object-cover rounded-lg" />
+      <p class="mt-2.5 mb-4 text-sm">{{ gif?.title }}</p>
+      <a :href="imgSrc" target="_blank">
+        <button class="px-4 py-2.5 text-white font-semibold w-full rounded-md bg-gradient-to-r from-violet-700 to-blue-600">View Gif</button>
+      </a>
     </div>
   </Drawer>
 </template>

@@ -2,6 +2,7 @@
 import { AutoComplete, Spin, notification } from 'ant-design-vue';
 import { ref, watch } from 'vue';
 import { watchDebounced } from '@vueuse/core'
+import { SearchOutlined } from '@ant-design/icons-vue';
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -50,13 +51,13 @@ const suggestions = ref(['tottenham hotspur', 'dortmund', 'wwe', 'dean ambrose']
         :autofocus="true"
         v-model:value="autoComplete"
         :options="options"
-        class="w-[calc(100%-28px)] md:w-[300px]"
-        :class="{ 'md:ml-[28px]': isLoading }"
+        class="w-[calc(100%-38px)] md:w-[300px]"
         placeholder="Input here"
         @select="(value) => emits('select', value)"
         @search="onSearch"
       />
-      <Spin v-if="isLoading" class="h-[20px]" />
+      <Spin v-if="isLoading" class="h-5 w-[30px]" />
+      <button v-else @click="() => emits('select', inputField)" class="w-[30px] h-[30px] rounded flex justify-center items-center text-white bg-violet-700"><SearchOutlined class="text-sm h-[14px] flex" /></button>
     </div>
 
     <div class="flex gap-2 flex-wrap px-4">
@@ -64,7 +65,7 @@ const suggestions = ref(['tottenham hotspur', 'dortmund', 'wwe', 'dean ambrose']
         v-for="suggestion in suggestions"
         :key="suggestion"
         @click="() => emits('select', suggestion)"
-        class="text-gray-400 border px-2 py-1 text-sm rounded-lg"
+        class="text-gray-500 bg-gray-100 border border-gray-200 px-2 py-1 text-[13px] rounded-lg"
         >
         {{ suggestion }}
       </button>
