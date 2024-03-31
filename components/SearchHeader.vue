@@ -42,6 +42,12 @@ const fetchSuggestions = async () => {
 watch(debouncedInputField, fetchSuggestions)
 
 const suggestions = ref(['tottenham hotspur', 'dortmund', 'wwe', 'dean ambrose'])
+
+const onSearchWithKeyword = (keyword) => {
+  if (keyword) {
+    emits('select', keyword)
+  }
+}
 </script>
 
 <template>
@@ -57,14 +63,14 @@ const suggestions = ref(['tottenham hotspur', 'dortmund', 'wwe', 'dean ambrose']
         @search="onSearch"
       />
       <Spin v-if="isLoading" class="h-5 w-[30px]" />
-      <button v-else @click="() => emits('select', inputField)" class="w-[30px] h-[30px] rounded flex justify-center items-center text-white bg-violet-700"><SearchOutlined class="text-sm h-[14px] flex" /></button>
+      <button v-else @click="() => onSearchWithKeyword(inputField)" class="w-[30px] h-[30px] rounded flex justify-center items-center text-white bg-violet-700"><SearchOutlined class="text-sm h-[14px] flex" /></button>
     </div>
 
     <div class="flex gap-2 flex-wrap px-4">
       <button
         v-for="suggestion in suggestions"
         :key="suggestion"
-        @click="() => emits('select', suggestion)"
+        @click="() => onSearchWithKeyword(suggestion)"
         class="text-gray-500 bg-gray-100 border border-gray-200 px-2 py-1 text-[13px] rounded-lg"
         >
         {{ suggestion }}

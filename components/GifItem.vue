@@ -36,7 +36,7 @@ const imgSrc =
       <div class="flex gap-2 absolute bottom-5 left-5 pr-5">
         <Avatar :size="40" :src="gif.user?.avatar_url" class="border border-white shrink-0" />
         <div class="flex flex-col gap-0.5">
-          <span class="text-white text-lg font-semibold leading-[125%] line-clamp-1">{{ gif.user?.display_name || '-' }}</span>
+          <a :href="gif.user.profile_url" target="_blank" class="text-white hover:text-violet-200 text-lg font-semibold leading-[125%] line-clamp-1">{{ gif.user?.display_name || '-' }}</a>
           <span class="text-gray-200 text-xs leading-[125%] line-clamp-1">{{ gif.user?.username || '-' }}</span>
         </div>
       </div>
